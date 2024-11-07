@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,6 +7,9 @@ from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+def index(request):
+    return redirect('login')
 
 @api_view(['POST'])
 def register_view(request):
