@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
+from rest_framework.exceptions import ValidationError, AuthenticationFailed
 
 User = get_user_model()
 
