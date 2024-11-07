@@ -1,16 +1,30 @@
+import re
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.core.validators import EmailValidator
+
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, phone_number, name, password=None, **extra_fields):
+    def create_user(self, phone_number, name, password=None, email=None, **extra_fields):
+        if not self.is_valid_phone_number(phone_number):
+            raise ValueError("The phone number must be a valid 10-digit Indian phone number")
+
+        if email and not self.is_valid_email(email):
+            raise ValueError("The email is not valid")
+
+        if password and not self.is_valid_password(password):
+            raise ValueError("Password must be at least 8 characters long and alphanumeric.")
+
         if not phone_number:
             raise ValueError("The phone number must be set")
-        user = self.model(phone_number=phone_number, name=name, **extra_fields)
+        
+        user = self.model(phone_number=phone_number, name=name, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone_number, name, password=None, **extra_fields):
+    def create_superuser(self, phone_number, name, password=None, email=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -19,13 +33,29 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self.create_user(phone_number, name, password, **extra_fields)
+        return self.create_user(phone_number, name, password, email, **extra_fields)
+
+    def is_valid_phone_number(self, phone_number):
+        # Phone number validation is done for India (10 digits starting with 7-9)
+        phone_regex = r"^[789]\d{9}$"  # Phone number should start with 7, 8, or 9 and followed by 9 digits according to indian standards
+        return bool(re.match(phone_regex, phone_number))
+
+    def is_valid_email(self, email):
+        validator = EmailValidator()
+        try:
+            validator(email)
+            return True
+        except ValidationError:
+            return False
+
+    def is_valid_password(self, password):
+        return len(password) >= 8 and any(c.isdigit() for c in password) and any(c.isalpha() for c in password)
+
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=13, unique=True)
     email = models.EmailField(blank=True, null=True)
-    token = models.CharField(max_length=100)
     
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
