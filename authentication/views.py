@@ -20,7 +20,6 @@ def index(request):
     logger.info("Redirecting to login page")
     return redirect('login')
 
-# Password validation function
 def is_valid_password(password):
     if len(password) < 8:
         raise ValidationError("Password must be at least 8 characters long.")
@@ -44,7 +43,6 @@ def register_endpoint(request):
         logger.warning("Password validation error: %s", e.message)
         return Response({"errors": e.message}, status=status.HTTP_400_BAD_REQUEST)
 
-    # If password is valid, proceed with user registration
     serializer = UserSerializer(data=request.data)
     try:
         if serializer.is_valid():
