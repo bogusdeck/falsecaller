@@ -78,10 +78,3 @@ The following endpoints are available for interacting with the app:
     GET /api/spam-counter/: Check the number of spam reports for a given phone number. Requires authentication.
     GET /api/display-detail/: View detailed information about a person by phone number.
 
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/02e04135-fd1e-4e11-9ecf-ccbc4905260c/90db2373-4b31-42f2-b0fe-c06894eec4d9/image.png)
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/02e04135-fd1e-4e11-9ecf-ccbc4905260c/3e6d0c32-36ec-45da-b481-fa5a8876127f/image.png)
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/02e04135-fd1e-4e11-9ecf-ccbc4905260c/668f8683-08b5-41f7-b4ac-e96b9a105d8a/image.png)
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/02e04135-fd1e-4e11-9ecf-ccbc4905260c/21b72546-5708-4790-b502-146407628d57/image.png)
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/02e04135-fd1e-4e11-9ecf-ccbc4905260c/d8ae8017-53a2-4cfa-aed8-2ca1958896bd/image.png)
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/02e04135-fd1e-4e11-9ecf-ccbc4905260c/eb0f69ec-1f13-41dd-8d18-dbfb83820e3e/image.png)
